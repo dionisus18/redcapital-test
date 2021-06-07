@@ -65,7 +65,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                                                                                                                                                                                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                             document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -86,14 +86,30 @@
                 @if (auth()->check())
                     <div class="col-md-2">
                         @if (auth()->user()->hasRoles(['admin']))
-                            <h2>Menu</h2>
-                            <a href="{{ route('usuarios.index') }}">Administrar usuarios</a>
-                            <a href="{{ route('archivos.index') }}">Administrar archivos</a>
-                            <a href="{{ route('archivos.create') }}">Subir archivos</a>
-                            <a href="{{ route('menus.create') }}">Agregar Menu</a>
-                            <a href="{{ route('menus.index') }}">Administrar Menu</a>
-                            <a href="{{ route('submenus.create') }}">Agregar SubMenu</a>
-                            <a href="{{ route('submenus.index') }}">Administrar SubMenu</a>
+                            <ul class="list-group list-group-flush">
+                                <h2>Menu</h2>
+                                <li class="list-group-item">
+                                    <a href="{{ route('usuarios.index') }}">Administrar usuarios</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('archivos.index') }}">Administrar archivos</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('archivos.create') }}">Subir archivos</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('menus.create') }}">Agregar Menu</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('menus.index') }}">Administrar Menu</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('submenus.create') }}">Agregar SubMenu</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <a href="{{ route('submenus.index') }}">Administrar SubMenu</a>
+                                </li>
+                            </ul>
                         @endif
                         @foreach (auth()->user()->role->menu->all() ?? []
     as $menu)

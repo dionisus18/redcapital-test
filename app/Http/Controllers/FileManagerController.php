@@ -38,9 +38,9 @@ class FileManagerController extends Controller
         return view('fileManager.create');
     }
 
-    public function download($filename = '')
+    public function download($archivo = '')
     {
-        return Storage::download($filename);
+        return Storage::download($archivo);
     }
 
     /**
@@ -52,7 +52,9 @@ class FileManagerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'note' => 'string|max:255',
+            'note' => 'string|max:255',//nullable
+            'file' => 'required',
+            'usuario' => 'required|integer',
         ]);
         //return $request->all();
         // dd($request);
@@ -74,10 +76,10 @@ class FileManagerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  \App\Models\FileManager  $$archivo
      * @return \Illuminate\Http\Response
      */
-    public function show(FileManager $fileManager)
+    public function show(FileManager $archivo)
     {
         //
     }
@@ -85,10 +87,10 @@ class FileManagerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  \App\Models\FileManager  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function edit(FileManager $fileManager)
+    public function edit(FileManager $archivo)
     {
         //
     }
@@ -97,10 +99,10 @@ class FileManagerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  \App\Models\FileManager  $archivo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FileManager $fileManager)
+    public function update(Request $request, FileManager $archivo)
     {
         //
     }
@@ -111,10 +113,8 @@ class FileManagerController extends Controller
      * @param  \App\Models\FileManager  $fileManager
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FileManager $fileManager)
+    public function destroy(FileManager $archivo)
     {
-        return $fileManager;
-        $archivo = FileManager::find($fileManager->id);
         $archivo->delete();
         return redirect()->route('archivos.index')->with('info','Eliminado');
     }

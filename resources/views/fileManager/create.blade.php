@@ -18,19 +18,35 @@
                             @csrf
 
                             <div class="form-group">
-
                                 <label>Cargar Archivo</label>
-                                <input type="file" name="file" class="form-control-file" required>
+                                <input type="file" name="file"
+                                    class="form-control-file @error('file') is-invalid @enderror">
+                                @error('file')
+                                    <div class=" invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
                             @if (auth()->user()->hasRoles(['admin']))
                                 <div class="form-group">
                                     <label>Usuario</label>
-                                    <select class="custom-select" name="usuario">
+                                    <select class="custom-select @error('usuario') is-invalid @enderror" name="usuario">
                                         <option selected disabled>Seleccionar usuario</option>
                                         @foreach ($usuarios as $usuario)
-                                            <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                            @if (old('usuario') == $usuario->id)
+                                                <option selected value="{{ $usuario->id }}">
+                                                    {{ $usuario->name }}
+                                                </option>
+                                            @else
+                                                <option value="{{ $usuario->id }}">
+                                                    {{ $usuario->name }}
+                                                </option>
+                                            @endif
                                         @endforeach
                                     </select>
+                                    @error('usuario')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             @endif
                             <div class="form-group">
@@ -40,20 +56,10 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            {{-- <div class="input-group mb-3">
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-    <label class="custom-file-label" for="inputGroupFile01">Elegir archivo</label>
-  </div>
-</div> --}}
                             <div class="form-group">
-
                                 <input type="submit" value="Subir Archivo" class="btn btn-primary">
                             </div>
-
                         </form>
-
                     </div>
                 </div>
             </div>
