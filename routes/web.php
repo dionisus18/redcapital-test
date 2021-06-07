@@ -34,10 +34,11 @@ Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/storage/{filename}', [FileManagerController::class, 'download']);
+
 Route::resources([
     'archivos' => FileManagerController::class,
     'usuarios' => UserController::class,
     'menus' => MenuController::class,
     'submenus' => RouteController::class,
-    'roles' => RoleController::class,
 ]);

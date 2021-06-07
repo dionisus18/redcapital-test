@@ -7,8 +7,12 @@
                 <div class="card">
                     <div class="card-header">Subir Archivo</div>
                     <div class="card-body">
-                        <form {{-- action="{{ route('uploads.store') }}" --}} action="{{ route('archivos.store') }}" method="POST"
-                            enctype="multipart/form-data">
+                        @if (session('info'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('info') }}
+                            </div>
+                        @endif
+                        <form action="{{ route('archivos.store') }}" method="POST" enctype="multipart/form-data">
 
                             @method('POST')
                             @csrf
@@ -18,6 +22,17 @@
                                 <label>Cargar Archivo</label>
                                 <input type="file" name="file" class="form-control-file" required>
                             </div>
+                            @if (auth()->user()->hasRoles(['admin']))
+                                <div class="form-group">
+                                    <label>Usuario</label>
+                                    <select class="custom-select" name="usuario">
+                                        <option selected disabled>Seleccionar usuario</option>
+                                        @foreach ($usuarios as $usuario)
+                                            <option value="{{ $usuario->id }}">{{ $usuario->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
                             <div class="form-group">
                                 <label>Nota del archivo (opcional)</label>
                                 <input type="text" name="note" class="form-control @error('note') is-invalid @enderror">
@@ -25,6 +40,7 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                             {{-- <div class="input-group mb-3">
   <div class="custom-file">
     <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">

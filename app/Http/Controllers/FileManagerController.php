@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\FileManager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileManagerController extends Controller
 {
@@ -14,7 +16,11 @@ class FileManagerController extends Controller
      */
     public function index()
     {
-        $archivos = FileManager::all();
+        if (auth()->user()->hasRoles(['admin'])) {
+            $archivos = FileManager::orderByDesc('created_at')->get();
+        } else {
+            $archivos = FileManager::orderByDesc('created_at')->where('user_id', auth()->user()->id)->get();
+        }
         return view('fileManager.index', compact('archivos'));
     }
 
@@ -25,7 +31,16 @@ class FileManagerController extends Controller
      */
     public function create()
     {
+        if (auth()->user()->hasRoles(['admin'])) {
+            $usuarios = User::where('id', '>', 1)->get();
+            return view('fileManager.create', compact('usuarios'));
+        }
         return view('fileManager.create');
+    }
+
+    public function download($filename = '')
+    {
+        return Storage::download($filename);
     }
 
     /**
@@ -39,20 +54,20 @@ class FileManagerController extends Controller
         $request->validate([
             'note' => 'string|max:255',
         ]);
-        return $request->all();
-       // dd($request);
-
-            $upload = FileManager::create([
-                'user_id' => auth()->user()->id,
-                'owner' => $request->user_default
-            ] + $request->all());
-
-
-            if($request->file('file')){
-                $upload->file = $request->file('file')->store('archivos', 'public');
-                $upload->save();
-            }
-
+        //return $request->all();
+        // dd($request);
+        $userid;
+        if (auth()->user()->hasRoles(['admin'])) {
+            $userid = $request->input('usuario');
+        }else{
+            $userid = auth()->user()->id;
+        }
+        FileManager::create([
+            "name" => $request->file('file')->getClientOriginalName(),
+            "path" => $request->file('file')->store('public'),
+            "note" => $request->input('note') ?? '',
+            "user_id" => $userid,
+        ]);
         return back()->with('info','Subido con Exito');
     }
 
@@ -98,6 +113,9 @@ class FileManagerController extends Controller
      */
     public function destroy(FileManager $fileManager)
     {
-        //
+        return $fileManager;
+        $archivo = FileManager::find($fileManager->id);
+        $archivo->delete();
+        return redirect()->route('archivos.index')->with('info','Eliminado');
     }
 }

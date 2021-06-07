@@ -26,7 +26,8 @@ class FileManagerFactory extends Factory
         return [
             'user_id' => User::factory(),
             'note' => $this->faker->text(),
-            'name' => "/public/".Str::random(10).".".$this->faker->fileExtension()
+            'name' => $this->faker->streetName().".".$this->faker->fileExtension(),
+            'path' => "public/".Str::random(10).".".$this->faker->fileExtension()
         ];
     }
 }

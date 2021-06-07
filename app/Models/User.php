@@ -45,7 +45,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Role::class);
     }
-    public function hasRole(array $roles)
+    public function hasRoles(array $roles)
     {
         foreach ($roles as $role) {
             if ($this->role->name === $role) {

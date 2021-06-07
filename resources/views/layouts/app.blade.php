@@ -65,7 +65,7 @@
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
-                                                                             document.getElementById('logout-form').submit();">
+                                                                                                                                                                                                                                                                                                                                                                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -83,18 +83,29 @@
         <main class="py-4">
             <div class="row justify-content-center">
 
-                <div class="col-md-2">
-                    <h2>Menu</h2>
-                    <a href="{{ route('usuarios.index') }}">Administrar usuarios</a>
-                    {{-- <a href="{{route('roles')}}"> --}}
-                    <a href="{{ route('archivos.index') }}">Administrar archivos</a>
-                    <a href="{{ route('archivos.create') }}">Subir archivos</a>
-                    <a href="{{ route('menus.create') }}">Agregar Menu</a>
-                    <a href="{{ route('menus.index') }}">Administrar Menu</a>
-                    <a href="{{ route('submenus.create') }}">Agregar SubMenu</a>
-                    <a href="{{ route('submenus.index') }}">Administrar SubMenu</a>
-                </div>
-
+                @if (auth()->check())
+                    <div class="col-md-2">
+                        @if (auth()->user()->hasRoles(['admin']))
+                            <h2>Menu</h2>
+                            <a href="{{ route('usuarios.index') }}">Administrar usuarios</a>
+                            <a href="{{ route('archivos.index') }}">Administrar archivos</a>
+                            <a href="{{ route('archivos.create') }}">Subir archivos</a>
+                            <a href="{{ route('menus.create') }}">Agregar Menu</a>
+                            <a href="{{ route('menus.index') }}">Administrar Menu</a>
+                            <a href="{{ route('submenus.create') }}">Agregar SubMenu</a>
+                            <a href="{{ route('submenus.index') }}">Administrar SubMenu</a>
+                        @endif
+                        @foreach (auth()->user()->role->menu->all() ?? []
+    as $menu)
+                            {{-- @if ($loop->first)
+                                <x-accordion-menu :menu="$menu" class="show" />
+                            @else
+                                <x-accordion-menu :menu="$menu" class="show" />
+                            @endif --}}
+                            <x-accordion-menu :menu="$menu" class="show" />
+                        @endforeach
+                    </div>
+                @endif
                 <div class="col-md-8">
                     @yield('content')
                 </div>
@@ -102,5 +113,6 @@
         </main>
     </div>
 </body>
+
 
 </html>

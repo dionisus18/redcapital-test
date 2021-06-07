@@ -7,6 +7,11 @@
                 <div class="card">
                     <div class="card-header">Creación de nuevo Menu</div>
                     <div class="card-body">
+                        @if (session('info'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('info') }}
+                            </div>
+                        @endif
                         <form action="{{ route('submenus.store') }}" method="POST">
 
                             @method('POST')

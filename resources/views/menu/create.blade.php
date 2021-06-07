@@ -7,6 +7,11 @@
                 <div class="card">
                     <div class="card-header">Creación de nuevo Menu</div>
                     <div class="card-body">
+                        @if (session('info'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('info') }}
+                            </div>
+                        @endif
                         <form action="{{ route('menus.store') }}" method="POST">
 
                             @method('POST')
@@ -33,12 +38,12 @@
                             </div>
                             <div class="form-group">
                                 <label>Listado de submenus</label>
-                                @foreach ($roles as $rol)
+                                @foreach ($submenus as $route)
                                     <div class="custom-control custom-switch">
-                                        <input name="submenus[]" value="{{ $rol->id }}" type="checkbox"
-                                            class="custom-control-input" id="{{ $rol->name }}">
-                                        <label class="custom-control-label" for="{{ $rol->name }}">
-                                            {{ $rol->display_name }}
+                                        <input name="submenus[]" value="{{ $route->id }}" type="checkbox"
+                                            class="custom-control-input" id="route{{ $route->id }}">
+                                        <label class="custom-control-label" for="route{{ $route->id }}">
+                                            {{ $route->name }}
                                         </label>
                                         @error('note')
                                             <div class="invalid-feedback">{{ $message }}</div>

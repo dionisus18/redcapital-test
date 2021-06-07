@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Menu;
 use App\Models\Role;
+use App\Models\Route;
 use Illuminate\Http\Request;
 
 class MenuController extends Controller
@@ -27,7 +28,9 @@ class MenuController extends Controller
     public function create()
     {
         $roles = Role::all();
-        return view('menu.create', compact('roles'));
+        // $roles = Role::whereColumn('id', '>', 1);
+        $submenus = Route::all();
+        return view('menu.create', compact('roles'),compact('submenus'));
     }
 
     /**
@@ -98,6 +101,8 @@ class MenuController extends Controller
      */
     public function destroy(Menu $menu)
     {
-        //
+        $menu->routes()->detach();
+        $menu->delete();
+        return redirect()->route('menus.index');
     }
 }
