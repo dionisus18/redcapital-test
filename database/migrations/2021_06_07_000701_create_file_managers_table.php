@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRutesTable extends Migration
+class CreateFileManagersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,11 @@ class CreateRutesTable extends Migration
      */
     public function up()
     {
-        Schema::create('rutes', function (Blueprint $table) {
-            $table->id();
+        Schema::create('file_managers', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->integer('user_id');
+            $table->string('note')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ class CreateRutesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rutes');
+        Schema::dropIfExists('file_managers');
     }
 }

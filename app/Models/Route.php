@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Menu extends Model
+class Route extends Model
 {
+    use HasFactory;
+    public $timestamps = false;
     /**
      * The attributes that are mass assignable.
      *
@@ -14,15 +16,6 @@ class Menu extends Model
      */
     protected $fillable = [
         'name',
-        'role_id',
+        'route',
     ];
-    public function routes()
-    {
-        return $this->belongsToMany(Route::class, 'assigned_routes');
-    }
-    public function role()
-    {
-        return $this->belongsTo(Role::class);
-    }
-    use HasFactory;
 }

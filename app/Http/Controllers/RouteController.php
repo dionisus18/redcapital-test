@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FileManager;
+use App\Models\Route;
 use Illuminate\Http\Request;
 
-class FileManagerController extends Controller
+class RouteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class FileManagerController extends Controller
      */
     public function index()
     {
-        $archivos = FileManager::all();
-        return view('fileManager.index', compact('archivos'));
+        $submenus = Route::all();
+        return view('submenus.index', compact('submenus'));
     }
 
     /**
@@ -25,7 +25,7 @@ class FileManagerController extends Controller
      */
     public function create()
     {
-        return view('fileManager.create');
+        return view('submenus.create');
     }
 
     /**
@@ -36,33 +36,22 @@ class FileManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'note' => 'string|max:255',
+        //return $request->all();
+        Route::create([
+            "name" => $request->input('name'),
+            "route" => $request->input('route'),
         ]);
-        return $request->all();
-       // dd($request);
 
-            $upload = FileManager::create([
-                'user_id' => auth()->user()->id,
-                'owner' => $request->user_default
-            ] + $request->all());
-
-
-            if($request->file('file')){
-                $upload->file = $request->file('file')->store('archivos', 'public');
-                $upload->save();
-            }
-
-        return back()->with('info','Subido con Exito');
+        return back()->with('info', 'Nuevo SubMenu Creado');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(FileManager $fileManager)
+    public function show($id)
     {
         //
     }
@@ -70,10 +59,10 @@ class FileManagerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(FileManager $fileManager)
+    public function edit($id)
     {
         //
     }
@@ -82,10 +71,10 @@ class FileManagerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FileManager $fileManager)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -93,10 +82,10 @@ class FileManagerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\FileManager  $fileManager
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FileManager $fileManager)
+    public function destroy($id)
     {
         //
     }

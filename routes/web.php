@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RouteController;
 use App\Http\Controllers\FileManagerController;
 
 /*
@@ -14,14 +18,26 @@ use App\Http\Controllers\FileManagerController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth'])->name('dashboard');
 
-Route::get('archivos/create', [FileManagerController::class, 'create'])->middleware(['auth']);
+//Route::get('archivos/create', [FileManagerController::class, 'create'])->middleware(['auth']);
 
 require __DIR__.'/auth.php';
+
+Auth::routes();
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::resources([
+    'archivos' => FileManagerController::class,
+    'usuarios' => UserController::class,
+    'menus' => MenuController::class,
+    'submenus' => RouteController::class,
+    'roles' => RoleController::class,
+]);

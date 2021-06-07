@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMenusTable extends Migration
+class CreateAssignedRoutesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateMenusTable extends Migration
      */
     public function up()
     {
-        Schema::create('menus', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('role_id');
-            $table->timestamps();
-            $table->unique(["name", "role_id"], 'menu_per_role_unique');
+        Schema::create('assigned_routes', function (Blueprint $table) {
+            $table->integer('menu_id');
+            $table->integer('route_id');
         });
     }
 
@@ -29,6 +26,6 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('menus');
+        Schema::dropIfExists('assigned_routes');
     }
 }

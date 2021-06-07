@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Database\Seeders\MenuTableSeeder;
+use Database\Seeders\RouteTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,6 +16,12 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // \App\Models\User::factory(10)->create();
-        $this->call(UserTableSeeder::class);
+        $this->call([
+            UserTableSeeder::class,
+            FileManagerTableSeeder::class,
+            RouteTableSeeder::class,
+            MenuTableSeeder::class,
+            AssignedRoutesTableSeeder::class,
+        ]);
     }
 }

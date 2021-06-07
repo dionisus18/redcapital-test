@@ -22,28 +22,30 @@ class UserTableSeeder extends Seeder
             'name' => 'admin',
             'display_name' => 'Administrador',
         ]);
-        Role::create([
+        $roleUser = Role::create([
             'name' => 'default',
-            'display_name' => 'Sin Asignar',
+            'display_name' => 'Usuario',
         ]);
         $roleOp = Role::create([
             'name' => 'op',
             'display_name' => 'Operador',
         ]);
-
-        $userAdmin = User::create([
+        $roleAdmin->user()->create([
             'name' => 'Kevin',
             'email' => 'kevin@vaporframe.com',
             'password' => bcrypt('123123')
         ]);
-        $userOp = User::create([
+
+        $roleUser->user()->create([
             'name' => 'Juan',
             'email' => 'juan@vaporframe.com',
             'password' => bcrypt('223344')
         ]);
 
-        // $userAdmin->role()->save($roleAdmin);
-        $roleOp->user()->save($userOp);
-        $roleAdmin->user()->save($userAdmin);
+        $roleOp->user()->create([
+            'name' => 'Pablo',
+            'email' => 'pablo@vaporframe.com',
+            'password' => bcrypt('112233')
+        ]);
     }
 }
