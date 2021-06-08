@@ -3,17 +3,8 @@
     <div class="card">
         <div class="card-header">Listado de archivos</div>
         <div class="card-body">
-            @if (count($errors))
-                <div class="alert alert-error" role="alert">
-                    <ul>
-                        @foreach ($errors as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             @if (session('info'))
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-info" role="alert">
                     {{ session('info') }}
                 </div>
             @endif
@@ -49,7 +40,7 @@
                             </td> --}}
                             <td>
                                 @if ($archivo->name[0] !== '/')
-                                    <a class="btn btn-primary" target="_blank" href="{{ Storage::url($archivo->path) }}">
+                                    <a class="btn btn-primary" href="{{ Storage::url($archivo->path) }}">
                                         Descargar
                                     </a>
                                 @endif

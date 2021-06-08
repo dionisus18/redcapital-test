@@ -40,7 +40,10 @@ class FileManagerController extends Controller
 
     public function download($archivo = '')
     {
-        return Storage::download($archivo);
+        if(Storage::exists($archivo)){
+            return Storage::download($archivo);
+        }
+        return back()->with('info','El archivo no se encuentra disponible');
     }
 
     /**

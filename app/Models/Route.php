@@ -18,4 +18,8 @@ class Route extends Model
         'name',
         'route',
     ];
+    public function menus()
+    {
+        return $this->belongsToMany(Menu::class, 'assigned_routes');
+    }
 }

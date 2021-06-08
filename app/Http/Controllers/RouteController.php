@@ -36,22 +36,21 @@ class RouteController extends Controller
      */
     public function store(Request $request)
     {
-        //return $request->all();
         Route::create([
             "name" => $request->input('name'),
             "route" => $request->input('route'),
         ]);
-
+        //$validated = $request->validated();
         return back()->with('info', 'Nuevo SubMenu Creado');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Route  $submenu
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Route $submenu)
     {
         //
     }
@@ -59,10 +58,10 @@ class RouteController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Route  $submenu
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Route $submenu)
     {
         //
     }
@@ -71,10 +70,10 @@ class RouteController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Route  $submenu
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Route $submenu)
     {
         //
     }
@@ -82,11 +81,13 @@ class RouteController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Route  $submenu
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Route $submenu)
     {
-        //
+        $submenu->menus()->detach();
+        $submenu->delete();
+        return redirect()->route('submenus.index');
     }
 }

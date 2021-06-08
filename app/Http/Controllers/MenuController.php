@@ -99,9 +99,8 @@ class MenuController extends Controller
      * @param  \App\Models\Menu  $menu
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request,Menu $menu)
+    public function destroy(Menu $menu)
     {
-        dd($menu);
         $menu->routes()->detach();
         $menu->delete();
         return redirect()->route('menus.index');

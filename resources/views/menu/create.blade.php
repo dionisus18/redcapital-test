@@ -19,7 +19,8 @@
 
                             <div class="form-group">
                                 <label>Nombre</label>
-                                <input type="text" name="name" class="form-control @error('name') is-invalid @enderror">
+                                <input type="text" value="{{ old('name') }}" name="name"
+                                    class="form-control @error('name') is-invalid @enderror">
                                 @error('name')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror

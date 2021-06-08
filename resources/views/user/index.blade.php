@@ -22,7 +22,7 @@
                             <td>{{ $u->email }}</td>
                             <td>{{ $u->role->display_name }}</td>
                             <td>{{ $u->updated_at->format('d-m-Y') }}</td>
-                            <td>
+                            <td class="d-flex justify-content-center">
                                 <a class="btn btn-primary" href="{{ route('usuarios.edit', $u) }}">
                                     Editar
                                 </a>

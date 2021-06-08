@@ -3,15 +3,6 @@
     <div class="card">
         <div class="card-header">Listado de menus</div>
         <div class="card-body">
-            @if ($errors)
-                <div class="alert alert-error" role="alert">
-                    <ul>
-                        @foreach ($errors as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
             @if (session('info'))
                 <div class="alert alert-success" role="alert">
                     {{ session('info') }}
@@ -38,7 +29,7 @@
                                     {{ $route->name }}
                                 @endforeach
                             </td>
-                            <td>
+                            <td class="d-flex justify-content-center">
                                 <form action="{{ route('menus.destroy', $menu) }}" method="POST">
                                     @method('DELETE')
                                     @csrf
