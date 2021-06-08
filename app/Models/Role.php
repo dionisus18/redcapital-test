@@ -15,10 +15,6 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
-    public function menus()
-    {
-        return $this->belongsToMany(Menu::class, 'assigned_routes');
-    }
     public function menu()
     {
         return $this->hasMany(Menu::class);

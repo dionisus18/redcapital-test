@@ -54,4 +54,16 @@ class User extends Authenticatable
         }
         return false;
     }
+    public function hasRights($route)
+    {
+        // dd($this->role->menu->routes());
+        foreach ($this->role->menu as $menu) {
+            $local = Route::where('route', '=', $route)->firstOrFail();
+            // dd($menu->routes->contains($local->id));
+            if ($menu->routes->contains($local->id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
