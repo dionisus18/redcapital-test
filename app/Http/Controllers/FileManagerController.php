@@ -10,6 +10,15 @@ use Illuminate\Support\Facades\Storage;
 class FileManagerController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'roles:download']);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -54,18 +63,22 @@ class FileManagerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'note' => 'string|max:255',//nullable
-            'file' => 'required',
-            'usuario' => 'required|integer',
-        ]);
         //return $request->all();
         // dd($request);
         $userid;
         if (auth()->user()->hasRoles(['admin'])) {
-            $userid = $request->input('usuario');
+            $request->validate([
+                'note' => 'nullable|string|max:255',//nullable
+                'file' => 'required',
+                'usuario' => 'required|integer',
+                ]);
+                $userid = $request->input('usuario');
         }else{
-            $userid = auth()->user()->id;
+            $request->validate([
+                'note' => 'nullable|string|max:255',//nullable
+                'file' => 'required',
+                ]);
+                $userid = auth()->user()->id;
         }
         FileManager::create([
             "name" => $request->file('file')->getClientOriginalName(),

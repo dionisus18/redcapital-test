@@ -4,9 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Route;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreRouteRequest;
 
 class RouteController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','roles']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +44,7 @@ class RouteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRouteRequest $request)
     {
         Route::create([
             "name" => $request->input('name'),

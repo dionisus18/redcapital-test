@@ -7,6 +7,15 @@
                 <div class="card">
                     <div class="card-header">Subir Archivo</div>
                     <div class="card-body">
+                        {{-- @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif --}}
                         @if (session('info'))
                             <div class="alert alert-success" role="alert">
                                 {{ session('info') }}

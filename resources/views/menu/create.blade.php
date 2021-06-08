@@ -27,28 +27,33 @@
                             </div>
                             <div class="form-group">
                                 <label>Rol</label>
-                                <select class="custom-select" name="rol">
+                                <select class="custom-select @error('rol') is-invalid @enderror" name="rol">
                                     <option selected disabled>Seleccionar rol</option>
                                     @foreach ($roles as $rol)
-                                        <option value="{{ $rol->id }}">{{ $rol->display_name }}</option>
+                                        @if (old('rol') == $rol->id)
+                                            <option selected value="{{ $rol->id }}">{{ $rol->display_name }}</option>
+                                        @else
+                                            <option value="{{ $rol->id }}">{{ $rol->display_name }}</option>
+                                        @endif
                                     @endforeach
                                 </select>
-                                @error('note')
+                                @error('rol')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
                             <div class="form-group">
-                                <label>Listado de submenus</label>
+                                <label class="@error('submenus') is-invalid @enderror">Listado de submenus</label>
+                                @error('submenus')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
                                 @foreach ($submenus as $route)
                                     <div class="custom-control custom-switch">
+
                                         <input name="submenus[]" value="{{ $route->id }}" type="checkbox"
                                             class="custom-control-input" id="route{{ $route->id }}">
                                         <label class="custom-control-label" for="route{{ $route->id }}">
                                             {{ $route->name }}
                                         </label>
-                                        @error('note')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 @endforeach
                             </div>

@@ -10,6 +10,15 @@ use Illuminate\Http\Request;
 class MenuController extends Controller
 {
     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth','roles']);
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -43,6 +52,11 @@ class MenuController extends Controller
     {
         // return $request->all();
         $localErrors = false;
+        $request->validate([
+            'name' => 'required|string|max:255',//nullable
+            'rol' => 'required|integer',
+            'submenus' => 'required',
+            ]);
         try {
             $menu = Menu::create([
                 "name" => $request->input('name'),
